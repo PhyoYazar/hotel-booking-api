@@ -28,10 +28,26 @@ mongoose.connection.on("disconnected", () => {
 });
 
 //middlewares
+app.use(express.json());
+
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/hotels", hotelsRoutes);
 app.use("/api/rooms", roomsRoutes);
+
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || "500";
+  const errorMessage = err.message || "Something went wrong";
+
+  return res
+    .status(errorStatus)
+    .json({
+      success: false,
+      status: errorStatus,
+      message: errorMessage,
+      stack: err.stack,
+    });
+});
 
 app.listen(8800, () => {
   connect();

@@ -2,11 +2,13 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/login", (req, res) => {
+//LOGIN
+router.post("/login", (req, res) => {
   res.send("hello this is auth LOGIN endpoint");
 });
 
-router.get("/register", (req, res) => {
+//SINGUP
+router.post("/register", (req, res) => {
   res.send("hello this is auth REGISTER endpoint");
 });
 
