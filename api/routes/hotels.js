@@ -9,19 +9,22 @@ import {
 
 const router = express.Router();
 
-//GET ALL
-router.get("", getHotels);
+// router.get("", getHotels); //GET ALL
+// router.get("/:hotel_id", getHotel); //GET
+// router.post("", createHotel); //CREATE
+// router.put("/:hotel_id", updateHotel); //UPDATE
+// router.delete("/:hotel_id", middleware, deleteHotel); //DELETE
 
-//GET
-router.get("/:hotel_id", getHotel);
+router.param("hotel_id", (req, res, next, val) => {
+  // console.log(`Hotel id is ${val}`);
 
-//CREATE
-router.post("", createHotel);
+  // ERROR CHECKING CODE or validation...
 
-//UPDATE
-router.put("/:hotel_id", updateHotel);
+  next();
+});
 
-//DELETE
-router.delete("/:hotel_id", deleteHotel);
+router.route("/").get(getHotels).post(createHotel);
+
+router.route("/:hotel_id").get(getHotel).put(updateHotel).delete(deleteHotel);
 
 export default router;
