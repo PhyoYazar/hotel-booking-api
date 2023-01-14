@@ -1,9 +1,15 @@
 {
+  "env": {
+    // "commonjs": true,
+    // "es6": true,
+    "node": true
+  },
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
   "rules": {
     "sourceType": "module",
     // "allowImportExportEverywhere": true,
+
     "prettier/prettier": "error",
     "spaced-comment": "off",
     "no-console": "warn",
