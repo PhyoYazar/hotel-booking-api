@@ -6,11 +6,13 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: [true, 'User must have a name'],
       unique: true,
+      trim: true,
     },
     email: {
       type: String,
       required: [true, 'User must have a email'],
       unique: true,
+      trim: true,
     },
     password: {
       type: String,
@@ -20,6 +22,10 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // createdAt: {
+    //   type: Date,
+    //   default: Date.now(),
+    // },
   },
   { timestamps: true }
 );

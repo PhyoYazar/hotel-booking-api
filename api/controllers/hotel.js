@@ -3,8 +3,19 @@ import Hotel from '../models/Hotel.js';
 //GET ALL
 export const getHotels = async (req, res, next) => {
   try {
+    const queryObj = { ...req.query };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+    const query = Hotel.find(queryObj);
+
+    // example
+    // const query = await Hotel.find();
+
     const hotels = await Hotel.find();
-    res.status(200).json({ status: 'success', data: hotels });
+    res
+      .status(200)
+      .json({ status: 'success', results: hotels.length, data: hotels });
   } catch (err) {
     next(err);
   }
@@ -39,11 +50,11 @@ export const updateHotel = async (req, res, next) => {
   try {
     const updatedHotel = await Hotel.findByIdAndUpdate(
       req.params.hotel_id,
-      // req.body, // only work on PATCH method
       // PUT
       {
         $set: req.body,
       },
+      // req.body, // only work on PATCH method
       { new: true } // to return the updated new value
     );
     res.status(200).json({ status: 'success', data: updatedHotel });

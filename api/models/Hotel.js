@@ -4,6 +4,7 @@ const HotelSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Hotel must have a name'],
+    trim: true,
   },
   type: {
     type: String,
@@ -23,6 +24,7 @@ const HotelSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
+    trim: true,
   },
   rating: {
     type: Number,
