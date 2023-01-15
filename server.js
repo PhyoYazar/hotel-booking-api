@@ -8,15 +8,7 @@ const DB = process.env.MONGO_DATABASE_URL.replace(
 
 const connect = async () => {
   try {
-    await mongoose.connect(
-      DB
-      // ,{
-      //   useNewUrlParser: true,
-      //   useCreateIndex: true,
-      //   useFindAndModify: false,
-      //   useUnifiedTopology: true,
-      // }
-    );
+    await mongoose.connect(DB);
     console.log('Connected to mongoDB');
   } catch (error) {
     throw error;
@@ -28,7 +20,16 @@ mongoose.connection.on('disconnected', () => {
 });
 
 const port = process.env.PORT || 8800;
-app.listen(port, () => {
+
+const server = app.listen(port, () => {
   connect();
-  console.log('Connected to backend');
+  console.log('Connected to backend server');
+});
+
+process.on('unhandledRejection', (err) => {
+  console.log('UNHANDLED REJECTION! 💥 Shutting down...');
+  console.log(err.name, err.message);
+  server.close(() => {
+    process.exit(1);
+  });
 });
