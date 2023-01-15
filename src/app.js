@@ -5,6 +5,7 @@ import express from 'express';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 //module
 import AppError from './utils/appError.js';
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(cookieParser());
+app.use(cors());
 app.use(express.json());
 
 // ROUTES

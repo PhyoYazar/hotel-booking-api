@@ -23,7 +23,7 @@ const port = process.env.PORT || 8800;
 
 const server = app.listen(port, () => {
   connect();
-  console.log('Connected to backend server');
+  console.log(`Connected to backend server and running on port ${port}`);
 });
 
 process.on('unhandledRejection', (err) => {
