@@ -1,11 +1,10 @@
-import express from "express";
+import express from 'express';
+import { getUsers } from '../controllers/user.js';
 
 const router = express.Router();
 
 //GET ALL
-router.get("/", (req, res) => {
-  res.send("hello this is USERS endpoint");
-});
+router.route('/').get(getUsers);
 
 //GET
 //CREATE
