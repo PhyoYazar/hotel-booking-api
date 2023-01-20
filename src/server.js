@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import app from './app.js';
+const mongoose = require('mongoose');
+const app = require('./app');
 
 const DB = process.env.MONGO_DATABASE_URL.replace(
   '<PASSWORD>',
@@ -7,12 +7,16 @@ const DB = process.env.MONGO_DATABASE_URL.replace(
 );
 
 const connect = async () => {
-  try {
-    await mongoose.connect(DB);
-    console.log('Connected to mongoDB');
-  } catch (error) {
-    throw error;
-  }
+  await mongoose.connect(
+    DB
+    // ,{
+    //   useNewUrlParser: true,
+    //   useCreateIndex: true,
+    //   useFindAndModify: false,
+    //   useUnifiedTopology: true,
+    // }
+  );
+  console.log('Connected to mongoDB');
 };
 
 mongoose.connection.on('disconnected', () => {

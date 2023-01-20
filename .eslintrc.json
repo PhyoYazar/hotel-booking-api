@@ -1,13 +1,13 @@
 {
   "env": {
-    // "commonjs": true,
-    // "es6": true,
+    "commonjs": true,
+    "es2021": true,
     "node": true
   },
   "extends": ["airbnb", "prettier", "plugin:node/recommended"],
   "plugins": ["prettier"],
   "rules": {
-    "sourceType": "module",
+    // "sourceType": "module",
     // "allowImportExportEverywhere": true,
 
     "prettier/prettier": "error",

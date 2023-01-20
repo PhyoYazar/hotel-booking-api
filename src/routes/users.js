@@ -1,16 +1,36 @@
-import express from 'express';
-import { getUser, getUsers } from '../controllers/user.js';
+const express = require('express');
+
+const authController = require('../controllers/authController');
+const userController = require('../controllers/userController');
 
 const router = express.Router();
 
-//GET ALL
-router.route('/').get(getUsers);
+router.use(authController.protect);
 
-//GET
-router.route('/:user_id').get(getUser);
+// UPDATE MY PASSWORD (as login user)
+router.patch('/updateMyPassword', authController.updatePassword);
 
-//CREATE
-//UPDATE
-//DELETE
+// GET ME (as login user)
+router.get('/me', userController.getMe, userController.getUser);
 
-export default router;
+// UPDATE ME 'patch' (as login user)
+router.patch('/updateMe', userController.updateMe);
+
+// DELETE USER (as login user)
+router.delete('/deleteMe', userController.deleteMe);
+
+//
+router.use(authController.restrictTo('superAdmin'));
+
+// GET ALL ADMIN USERS
+router.get('/admin', userController.getAdminUsers, userController.getUsers);
+
+router.route('/').get(userController.getUsers).post(userController.createUser);
+
+router
+  .route('/:id')
+  .get(userController.getUser)
+  .patch(userController.updateUser) // as admin
+  .delete(userController.deleteUser); // as admin
+
+module.exports = router;
