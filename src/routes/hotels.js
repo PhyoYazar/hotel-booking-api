@@ -8,13 +8,6 @@ const router = express.Router();
 // const router = express.Router({ mergeParams: true }); =>  in review route
 // router.use('/:tourId/reviews', reviewRouter);
 
-router.param('id', (req, res, next, val) => {
-  // console.logK(`Hotel id is ${val}`);
-  // ERROR CHECKING CODE or validation...
-  //
-  next();
-});
-
 router
   .route('/')
   .get(hotelController.getHotels)
@@ -26,7 +19,7 @@ router
 
 router
   .route('/:id')
-  .get(hotelController.getHotel)
+  .get(authController.protect, hotelController.getHotel)
   .patch(
     authController.protect,
     authController.restrictTo('admin'),
