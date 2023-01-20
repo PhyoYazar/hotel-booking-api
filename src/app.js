@@ -18,6 +18,7 @@ const globalErrorHandler = require('./middlewares/errorMiddleware');
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 const hotelsRoutes = require('./routes/hotels');
+const bookingsRoutes = require('./routes/bookings');
 
 // process.on('uncaughtException', (err) => {
 //   console.log('UNCAUGHT EXCEPTION! 💥 Shutting down...');
@@ -87,6 +88,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/hotels', hotelsRoutes);
+app.use('/api/v1/bookings', bookingsRoutes);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

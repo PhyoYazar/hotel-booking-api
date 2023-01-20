@@ -2,10 +2,17 @@ const express = require('express');
 
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
+const bookingRouter = require('./bookings');
 
 const router = express.Router();
 
 router.use(authController.protect);
+
+router.use(
+  '/:userId/bookings',
+  authController.restrictTo('user'),
+  bookingRouter
+);
 
 // UPDATE MY PASSWORD (as login user)
 router.patch('/updateMyPassword', authController.updatePassword);

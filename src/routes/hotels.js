@@ -2,6 +2,7 @@ const express = require('express');
 
 const hotelController = require('../controllers/hotelController');
 const authController = require('../controllers/authController');
+const bookingRouter = require('./bookings');
 
 const router = express.Router();
 
@@ -18,6 +19,12 @@ router
   );
 
 router.use(authController.protect);
+
+router.use(
+  '/:hotelId/bookings',
+  authController.restrictTo('admin'),
+  bookingRouter
+);
 
 router
   .route('/:id')
