@@ -1,16 +1,35 @@
-import express from 'express';
-import {
-  createHotel,
-  deleteHotel,
-  getHotel,
-  getHotels,
-  updateHotel,
-} from '../controllers/hotel.js';
+const express = require('express');
+
+const hotelController = require('../controllers/hotelController');
+const authController = require('../controllers/authController');
+const bookingRouter = require('./bookings');
 
 const router = express.Router();
 
-router.route('/').get(getHotels).post(createHotel);
+// const router = express.Router({ mergeParams: true }); =>  in review route
+// router.use('/:tourId/reviews', reviewRouter);
 
-router.route('/:hotel_id').get(getHotel).put(updateHotel).delete(deleteHotel);
+router
+  .route('/')
+  .get(hotelController.getHotels)
+  .post(
+    authController.protect,
+    authController.restrictTo('admin'),
+    hotelController.createHotel
+  );
 
-export default router;
+router.use(authController.protect);
+
+router.use(
+  '/:hotelId/bookings',
+  authController.restrictTo('admin'),
+  bookingRouter
+);
+
+router
+  .route('/:id')
+  .get(hotelController.getHotel)
+  .patch(authController.restrictTo('admin'), hotelController.updateHotel)
+  .delete(authController.restrictTo('superAdmin'), hotelController.deleteHotel);
+
+module.exports = router;
