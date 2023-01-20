@@ -17,18 +17,12 @@ router
     hotelController.createHotel
   );
 
+router.use(authController.protect);
+
 router
   .route('/:id')
-  .get(authController.protect, hotelController.getHotel)
-  .patch(
-    authController.protect,
-    authController.restrictTo('admin'),
-    hotelController.updateHotel
-  )
-  .delete(
-    authController.protect,
-    authController.restrictTo('superAdmin'),
-    hotelController.deleteHotel
-  );
+  .get(hotelController.getHotel)
+  .patch(authController.restrictTo('admin'), hotelController.updateHotel)
+  .delete(authController.restrictTo('superAdmin'), hotelController.deleteHotel);
 
 module.exports = router;
