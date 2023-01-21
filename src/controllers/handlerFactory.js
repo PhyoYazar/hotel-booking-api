@@ -4,10 +4,10 @@ const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    // To allow for nested GET 'reviews' on tour (hack)
+    // To allow for nested GET 'bookings' on hotel/user (hack)
     let filter = {};
-    if (req.params.hotelId) filter = { tour: req.params.hotelId };
-    if (req.params.userId) filter = { tour: req.params.userId };
+    if (req.params.hotelId) filter = { hotel: req.params.hotelId };
+    if (req.params.userId) filter = { user: req.params.userId };
 
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
@@ -21,9 +21,7 @@ exports.getAll = (Model) =>
     res.status(200).json({
       status: 'success',
       results: doc.length,
-      data: {
-        data: doc,
-      },
+      data: doc,
     });
   });
 
@@ -39,9 +37,7 @@ exports.getOne = (Model, popOptions) =>
 
     res.status(200).json({
       status: 'success',
-      data: {
-        data: doc,
-      },
+      data: doc,
     });
   });
 
@@ -51,9 +47,7 @@ exports.createOne = (Model) =>
 
     res.status(201).json({
       status: 'success',
-      data: {
-        data: doc,
-      },
+      data: doc,
     });
   });
 
@@ -70,9 +64,7 @@ exports.updateOne = (Model) =>
 
     res.status(200).json({
       status: 'success',
-      data: {
-        data: doc,
-      },
+      data: doc,
     });
   });
 

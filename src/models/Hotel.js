@@ -29,6 +29,7 @@ const HotelSchema = new mongoose.Schema(
 
     roomType: [
       {
+        _id: false,
         type: {
           type: String,
           default: '1P',
@@ -66,6 +67,7 @@ const HotelSchema = new mongoose.Schema(
     },
   },
   { timestamps: true }
+  // { _id: false }
 );
 
 module.exports = mongoose.model('Hotel', HotelSchema);
