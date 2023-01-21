@@ -20,13 +20,11 @@ exports.createBooking = catchAsync(async (req, res, next) => {
 
   const data = { ...req.body, user: req.user.id };
 
-  const doc = await Booking.create(data);
+  const createdBooking = await Booking.create(data);
 
   res.status(201).json({
     status: 'success',
-    data: {
-      data: doc,
-    },
+    data: createdBooking,
   });
 });
 
