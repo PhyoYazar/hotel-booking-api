@@ -10,6 +10,7 @@ const bookingSchema = new mongoose.Schema(
     hotel: {
       type: mongoose.Schema.ObjectId,
       ref: 'Hotel',
+      required: true,
     },
 
     phoneNumber: {
@@ -42,6 +43,12 @@ const bookingSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// {'bookingRooms': {
+//   $elemMatch : {
+//       'type' : '1P'
+//   }
+// }}
 
 const Booking = mongoose.model('Booking', bookingSchema);
 

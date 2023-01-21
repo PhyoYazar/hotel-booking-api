@@ -2,7 +2,7 @@ const express = require('express');
 
 const hotelController = require('../controllers/hotelController');
 const authController = require('../controllers/authController');
-const bookingRouter = require('./bookings');
+const bookingController = require('../controllers/bookingController');
 
 const router = express.Router();
 
@@ -20,11 +20,10 @@ router
 
 router.use(authController.protect);
 
-router.use(
-  '/:hotelId/bookings',
-  authController.restrictTo('admin'),
-  bookingRouter
-);
+router
+  .route('/:hotelId/bookings')
+  .get(authController.restrictTo('admin'), bookingController.getBookings)
+  .post(authController.restrictTo('user'), bookingController.createBooking);
 
 router
   .route('/:id')
