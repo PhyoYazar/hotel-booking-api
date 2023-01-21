@@ -24,6 +24,7 @@ const bookingSchema = new mongoose.Schema(
     },
 
     bookingRooms: {
+      _id: false,
       type: [
         {
           type: {
